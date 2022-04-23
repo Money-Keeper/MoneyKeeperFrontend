@@ -3,7 +3,8 @@
   "version": "2.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
+    "start:proxy": "node ./proxy/index.js",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "serve": "serve dist",
@@ -16,17 +17,15 @@
   },
   "dependencies": {
     "@tanstack/react-location": "^3.7.4",
+    "antd": "^4.19.5",
     "react": "^18.0.0-rc.0",
     "react-dom": "^18.0.0-rc.0",
-    "recoil": "^0.6.1"
+    "recoil": "^0.6.1",
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
     "@babel/preset-env": "^7.16.11",
-    "@tailwindcss/aspect-ratio": "^0.4.0",
-    "@tailwindcss/forms": "^0.5.0",
-    "@tailwindcss/line-clamp": "^0.3.1",
-    "@tailwindcss/typography": "^0.5.2",
     "@testing-library/dom": "^8.11.3",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
@@ -35,6 +34,7 @@
     "@types/jest": "^27.4.1",
     "@types/react": "^17.0.42",
     "@types/react-dom": "^17.0.14",
+    "@types/styled-components": "^5.1.25",
     "@types/testing-library__jest-dom": "^5.14.3",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
@@ -54,7 +54,6 @@
     "prettier": "^2.6.0",
     "prettier-plugin-tailwind-css": "^1.5.0",
     "serve": "^13.0.2",
-    "tailwindcss": "^3.0.23",
     "ts-jest": "^27.1.4",
     "typescript": "^4.6.2",
     "vite": "^2.8.6",
