@@ -3,8 +3,8 @@
 # Start
 
 ```
-yarn
-yarn dev
+yarn start:proxy
+yarn start
 ```
 # License
 
