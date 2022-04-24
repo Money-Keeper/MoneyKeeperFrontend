@@ -1,15 +1,19 @@
 import type { ServerError } from '../request/error';
 import { getUnknownError } from '../request/error';
+import { RequestImpl } from '../request/Request.impl';
 import type { Request } from '../request/Request.types';
 
 import type { Mapper } from './Mapper';
 
 class Crud<Entity, NewEntity, ServerEntity = Entity> {
+  private readonly request: Request;
+
   constructor(
     private readonly prefix: string,
-    private readonly mapper: Mapper<Entity, ServerEntity>,
-    private readonly request: Request
-  ) {}
+    private readonly mapper: Mapper<Entity, ServerEntity>
+  ) {
+    this.request = new RequestImpl(this.prefix);
+  }
 
   async get(): Promise<Entity[] | ServerError> {
     const [data, error] = await this.request.get<ServerEntity[]>();

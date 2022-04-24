@@ -5,7 +5,6 @@ import type {
 } from '../../domain/Expense/Expense.entity';
 import { Crud } from '../crud/Crud';
 import type { Mapper } from '../crud/Mapper';
-import type { Request } from '../request/Request.types';
 
 class ExpenseMapper implements Mapper<Expense, ExpandedExpense> {
   serverToEntity(expandedExpense: ExpandedExpense): Expense {
@@ -22,8 +21,8 @@ class ExpenseMapper implements Mapper<Expense, ExpandedExpense> {
 }
 
 class ExpenseService extends Crud<Expense, NewExpense, ExpandedExpense> {
-  constructor(request: Request) {
-    super('expenses/', new ExpenseMapper(), request);
+  constructor() {
+    super('expenses/', new ExpenseMapper());
   }
 }
 
