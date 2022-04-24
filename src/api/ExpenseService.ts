@@ -1,14 +1,13 @@
 import type { NewExpense } from '../domain/Expense/Expense.entity';
 
-import turniki, { Method } from './turniki';
+import { Request } from './request';
 
 namespace ExpenseService {
-  export const prefix = 'expenses/';
+  const prefix = 'expenses/';
+  const request = new Request(prefix);
 
-  export const post = (expense: NewExpense) => {
-    const [data, error] = turniki<null, NewExpense>({
-      url: ExpenseService.prefix,
-      method: Method.post,
+  export const post = async (expense: NewExpense) => {
+    const [data, error] = await request.post<null, NewExpense>({
       body: expense,
     });
   };

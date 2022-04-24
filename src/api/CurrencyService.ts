@@ -1,14 +1,13 @@
 import type { Currency } from '../domain/Currency/Currency.entity';
 
-import index from './turniki';
+import { Request } from './request';
 
 namespace CurrencyService {
-  export const prefix = 'currencies/';
+  const prefix = 'currencies/';
+  const request = new Request(prefix);
 
   export const get = async (): Promise<Currency[]> => {
-    const [data, error] = await index<Currency[]>({
-      url: CurrencyService.prefix,
-    });
+    const [data, error] = await request.get<Currency[]>();
 
     if (error || !data) {
       return [];

@@ -22,5 +22,6 @@ app.use(
 );
 
 app.listen(PORT, HOST, () => {
+  // eslint-disable-next-line no-console
   console.log(`Starting Proxy at ${HOST}:${PORT}`);
 });
