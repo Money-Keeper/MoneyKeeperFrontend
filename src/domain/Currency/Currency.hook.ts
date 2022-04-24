@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 
-import CurrencyService from '../../api/CurrencyService';
+import CurrencyService from '../../api/services/CurrencyService';
 
 import { currenciesList } from './Currency.atom';
 import type { Currency } from './Currency.entity';

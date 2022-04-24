@@ -1,7 +1,7 @@
 import { Button, DatePicker, Form, Input, Select } from 'antd';
 import styled from 'styled-components';
 
-import ExpenseService from '../../api/ExpenseService';
+import ExpenseService from '../../api/services/ExpenseService';
 import { useCurrencies } from '../../domain/Currency/Currency.hook';
 
 namespace ExpenseForm {

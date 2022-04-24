@@ -1,6 +1,8 @@
+import type { RequestReturnValue } from '../crud/Request';
+
 import type { ServerError } from './error';
 import { getUnknownError } from './error';
-import type { Method } from './types';
+import type { Method } from './Request.types';
 
 export interface TurnikiArgs<Body> {
   url: string;
@@ -10,7 +12,7 @@ export interface TurnikiArgs<Body> {
 
 async function turniki<Return, Body>(
   params: TurnikiArgs<Body>
-): Promise<[Return | null, ServerError | null]> {
+): RequestReturnValue<Return> {
   try {
     return fetchData(params);
   } catch (e) {
@@ -22,7 +24,7 @@ export { turniki };
 
 async function fetchData<Return, Body>(
   params: TurnikiArgs<Body>
-): Promise<[Return | null, ServerError | null]> {
+): RequestReturnValue<Return> {
   const { url, method, body } = params;
 
   const response = await fetch(`http://localhost:3001/api/${url}`, {

@@ -1,10 +1,15 @@
 import { Url } from '../../utils/Url';
 
+import type {
+  ArgsWithBody,
+  BaseArgs,
+  RequestArgs,
+  Request,
+} from './Request.types';
+import { Method } from './Request.types';
 import { turniki } from './turniki';
-import type { ArgsWithBody, BaseArgs, RequestArgs } from './types';
-import { Method } from './types';
 
-class Request {
+class RequestImpl implements Request {
   constructor(private readonly prefix: string) {}
 
   async get<Return>(params?: BaseArgs) {
@@ -39,4 +44,4 @@ class Request {
   }
 }
 
-export { Request };
+export { RequestImpl };
