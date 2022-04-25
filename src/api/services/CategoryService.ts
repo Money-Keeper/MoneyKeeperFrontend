@@ -3,10 +3,13 @@ import type {
   NewCategory,
 } from '../../domain/Category/Category.entity';
 import { CrudWithoutMapper } from '../crud/CrudWithoutMapper';
+import { RequestImpl } from '../request/Request.impl';
 
 class CategoryService extends CrudWithoutMapper<Category, NewCategory> {
   constructor() {
-    super('categories/');
+    const request = new RequestImpl('categories/');
+
+    super(request);
   }
 }
 
