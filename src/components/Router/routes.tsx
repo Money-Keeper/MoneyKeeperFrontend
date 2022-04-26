@@ -1,7 +1,9 @@
 import type { Route } from '@tanstack/react-location';
 import { Navigate } from '@tanstack/react-location';
 
+import { Api } from '../../api';
 import ExpenseCreate from '../../pages/ExpenseCreate/ExpenseCreate';
+import { ExpenseEdit } from '../../pages/ExpenseEdit/ExpenseEdit';
 import NotFound from '../../pages/NotFound/NotFound';
 
 const routes: Route[] = [
@@ -21,8 +23,11 @@ const routes: Route[] = [
         element: <ExpenseCreate />,
       },
       {
-        path: ':invoiceId',
-        element: <NotFound />,
+        path: ':id',
+        element: <ExpenseEdit />,
+        loader: async ({ params: { id } }) => ({
+          expense: await Api.Expense.getOne(id),
+        }),
       },
     ],
   },

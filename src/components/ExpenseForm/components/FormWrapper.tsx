@@ -7,10 +7,7 @@ namespace FormWrapper {
   }
 }
 
-const FormWrapper: FC<PropsWithChildren<FormWrapper.Props>> = ({
-  title,
-  children,
-}) => {
+const FormWrapper: FC<FormWrapper.Props> = ({ title, children }) => {
   return (
     <Container>
       <Title>{title}</Title>
