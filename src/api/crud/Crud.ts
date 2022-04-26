@@ -10,18 +10,18 @@ class Crud<Entity, NewEntity, ServerEntity = Entity> {
     private readonly mapper: Mapper<Entity, ServerEntity>
   ) {}
 
-  async get(): Promise<Entity[] | ServerError> {
+  async get(): Promise<[Entity[] | null, ServerError | null]> {
     const [data, error] = await this.request.get<ServerEntity[]>();
 
     if (error) {
-      return error;
+      return [null, error];
     }
 
     if (!data) {
-      return [];
+      return [[], null];
     }
 
-    return data.map(this.mapper.serverToEntity);
+    return [data.map(this.mapper.serverToEntity), null];
   }
 
   async post(category: NewEntity): Promise<ServerError | null> {
@@ -41,14 +41,14 @@ class Crud<Entity, NewEntity, ServerEntity = Entity> {
     return error;
   }
 
-  async getOne(id: string): Promise<Entity | ServerError> {
+  async getOne(id: string): Promise<[Entity | null, ServerError | null]> {
     const [data, error] = await this.request.get<ServerEntity>({ url: id });
 
     if (error || !data) {
-      return error || getUnknownError();
+      return [null, error || getUnknownError()];
     }
 
-    return this.mapper.serverToEntity(data);
+    return [this.mapper.serverToEntity(data), null];
   }
 
   async remove(id: string): Promise<ServerError | null> {

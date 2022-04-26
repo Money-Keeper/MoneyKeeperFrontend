@@ -1,17 +1,8 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
-import CurrencyService from '../../api/services/CurrencyService';
-
-import { currenciesList } from './Currency.atom';
+import { currencies } from './Currency.atom';
 import type { Currency } from './Currency.entity';
 
-export const useCurrencies = (): [Currency[], () => Promise<void>] => {
-  const [currencies, setCurrencies] = useRecoilState(currenciesList);
-
-  const fetchCurrencies = async () => {
-    const data = await CurrencyService.get();
-    setCurrencies(data);
-  };
-
-  return [currencies, fetchCurrencies];
+export const useCurrencies = (): Currency[] => {
+  return useRecoilValue(currencies);
 };
