@@ -1,8 +1,6 @@
-import type { RequestReturnValue } from '../crud/Request';
-
 import type { ServerError } from './error';
 import { getUnknownError } from './error';
-import type { Method } from './Request.types';
+import type { Method, RequestReturnValue } from './Request.types';
 
 export interface TurnikiArgs<Body> {
   url: string;

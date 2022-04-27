@@ -1,34 +1,39 @@
 import { Outlet, ReactLocation, Router } from '@tanstack/react-location';
+import { Layout } from 'antd';
 import type { FC } from 'react';
 import styled from 'styled-components';
 
+import { H1 } from '../../ui/Heading/Heading';
 import { PageLayout } from '../PageLayout/PageLayout';
 
 import routes from './routes';
+
+const { Header } = Layout;
 
 const location = new ReactLocation();
 
 const RouterView: FC = () => {
   return (
     <Router location={location} routes={routes}>
-      <PageLayout>
-        <Header>
-          <Text>Hello I'm on all pages!</Text>
-        </Header>
+      <StyledLayout>
+        <StyledHeader>
+          <H1 align="center">Hello I'm on all pages!</H1>
+        </StyledHeader>
 
-        <Outlet />
-      </PageLayout>
+        <PageLayout>
+          <Outlet />
+        </PageLayout>
+      </StyledLayout>
     </Router>
   );
 };
 
 export default RouterView;
 
-const Header = styled.div`
-  margin-bottom: 10px;
-  text-align: center;
+const StyledLayout = styled(Layout)`
+  background-color: #f3f5ff;
 `;
 
-const Text = styled.div`
-  font-size: 24px;
+const StyledHeader = styled(Header)`
+  background-color: #f3f5ff;
 `;

@@ -1,8 +1,11 @@
 import type { FC } from 'react';
 import { withErrorBoundary } from 'react-error-boundary';
+import styled from 'styled-components';
 
 import { ErrorBoundryFallback } from '../../components/ErrorBoundryFallback/ErrorBoundryFallback';
+import { ExpenseEditForm } from '../../components/ExpenseForm/ExpenseEditForm';
 import { useCurrencies } from '../../domain/Currency/Currency.hook';
+import { Stack } from '../../ui/Stack/Stack';
 
 import { useExpense } from './ExpenseEdit.hook';
 
@@ -14,13 +17,15 @@ const ExpenseEdit: FC<ExpenseEdit.Props> = () => {
   const currencies = useCurrencies();
   const expense = useExpense();
 
-  console.log(expense, currencies);
-
-  return null;
+  return (
+    <Container direction="horizontal" justify="center">
+      <ExpenseEditForm expense={expense} currencies={currencies} />
+    </Container>
+  );
 };
 
-const ErrorBoundaryExpenseEdit = withErrorBoundary(ExpenseEdit, {
-  FallbackComponent: ErrorBoundryFallback,
-});
+export { ExpenseEdit };
 
-export { ErrorBoundaryExpenseEdit as ExpenseEdit };
+const Container = styled(Stack)`
+  padding-top: 40px;
+`;

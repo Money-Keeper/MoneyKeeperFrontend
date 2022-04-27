@@ -11,5 +11,10 @@ export const currencies = atom<Currency[]>({
 
 async function fetchCurrencies() {
   const { data, error } = await Api.Currency.get();
-  return error || !data ? [] : data;
+
+  if (error) {
+    throw new Error('Could not get currencies');
+  }
+
+  return !data ? [] : data;
 }

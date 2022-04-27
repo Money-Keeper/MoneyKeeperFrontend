@@ -28,7 +28,7 @@ const ExpenseEditForm: FC<ExpenseEditForm.Props> = ({
   };
 
   return (
-    <FormWrapper title="Add Expense">
+    <FormWrapper title="Edit Expense">
       <ExpenseForm
         currencies={currencies}
         defaultValues={expense}

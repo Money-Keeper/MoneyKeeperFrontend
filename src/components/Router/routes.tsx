@@ -9,14 +9,14 @@ import NotFound from '../../pages/NotFound/NotFound';
 const routes: Route[] = [
   {
     path: '/',
-    element: <Navigate to="/invoices" />,
+    element: <Navigate to="/expenses" />,
   },
   {
-    path: 'invoices',
+    path: 'expenses',
     children: [
       {
         path: '/',
-        element: <Navigate to="/invoices/create" />,
+        element: <Navigate to="/expenses/create" />,
       },
       {
         path: 'create',

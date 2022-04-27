@@ -1,5 +1,8 @@
-import type { FC, PropsWithChildren } from 'react';
+import type { FC } from 'react';
 import styled from 'styled-components';
+
+import { H4 } from '../../../ui/Heading/Heading';
+import { Stack } from '../../../ui/Stack/Stack';
 
 namespace FormWrapper {
   export interface Props {
@@ -9,8 +12,8 @@ namespace FormWrapper {
 
 const FormWrapper: FC<FormWrapper.Props> = ({ title, children }) => {
   return (
-    <Container>
-      <Title>{title}</Title>
+    <Container direction="vertical" justify="center" size="large">
+      <H4 align="center">{title}</H4>
 
       {children}
     </Container>
@@ -19,21 +22,9 @@ const FormWrapper: FC<FormWrapper.Props> = ({ title, children }) => {
 
 export { FormWrapper };
 
-const Container = styled.div`
+const Container = styled(Stack)`
   min-width: 700px;
   padding: 30px 60px 10px;
-
   border-radius: 10px;
   background-color: #fff;
-
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const Title = styled.div`
-  font-size: 20px;
-
-  margin-bottom: 50px;
 `;

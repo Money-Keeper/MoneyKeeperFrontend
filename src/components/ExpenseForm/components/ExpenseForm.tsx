@@ -1,5 +1,7 @@
 import { Button, DatePicker, Form, Input, Select } from 'antd';
+import moment from 'moment';
 import type { FC } from 'react';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import type { Currency } from '../../../domain/Currency/Currency.entity';
@@ -18,6 +20,10 @@ const ExpenseForm: FC<ExpenseForm.Props> = ({
   onSubmit,
   defaultValues = {},
 }) => {
+  const momentDefaultDate = useMemo(() => {
+    return defaultValues?.date && moment(defaultValues?.date);
+  }, []);
+
   return (
     <StyledForm layout="vertical" onFinish={onSubmit}>
       <Form.Item label="Amount" required>
@@ -64,7 +70,7 @@ const ExpenseForm: FC<ExpenseForm.Props> = ({
         name="date"
         rules={[{ required: true, message: 'Please select expense date' }]}
         label="Date"
-        initialValue={defaultValues.date}
+        initialValue={momentDefaultDate}
       >
         <StyledDatePicker size="large" />
       </Form.Item>
