@@ -13,6 +13,7 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write .",
+    "commit": "git add . && commit",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
+    "@commitlint/prompt-cli": "^17.1.2",
     "@tailwindcss/forms": "^0.5.3",
     "@types/node": "18.11.4",
     "@types/react": "18.0.22",
