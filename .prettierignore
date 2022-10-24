@@ -4,3 +4,4 @@ dist/
 .husky
 yarn.lock
 .prettierignore
+.next

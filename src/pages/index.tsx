@@ -35,7 +35,7 @@ export default function Home() {
               data-size="large"
               aria-label="Discuss andrejjurkin/create-tailwind-app on GitHub"
             >
-              Discuss
+              Discuss it
             </a>
           </div>
         </header>
