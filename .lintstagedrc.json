@@ -1,0 +1,4 @@
+{
+  "*": "yarn prettier",
+  "*.{ts,tsx}": "yarn lint"
+}
