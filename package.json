@@ -12,11 +12,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier": "prettier --write ."
-  },
-  "hooks": {
-    "pre-commit": "yarn lint-staged",
-    "pre-push": "yarn build"
+    "prettier": "prettier --write .",
+    "prepare": "husky install"
   },
   "dependencies": {
     "next": "12.3.1",
