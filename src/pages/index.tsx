@@ -1,7 +1,12 @@
 import Head from "next/head"
 import Script from "next/script"
+import useSWR from "swr"
+import useSWRMutation from "swr/mutation"
 
 export default function Home() {
+  // const {} = useSWR()
+  // const {} = useSWRMutation()
+
   return (
     <div>
       <Head>
