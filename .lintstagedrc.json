@@ -1,4 +1,4 @@
 {
-  "*": "yarn prettier",
-  "*.{ts,tsx}": "eslint --fix"
+  "**/*.{ts,tsx}": ["eslint --fix", "yarn prettier"],
+  "**/*.{css,json,html}": "yarn prettier"
 }

@@ -13,7 +13,8 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write .",
-    "commit": "git-cz",
+    "commit": "git add . && yarn cz",
+    "cz": "git-cz",
     "prepare": "husky install"
   },
   "dependencies": {
