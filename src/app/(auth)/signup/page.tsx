@@ -1,13 +1,13 @@
 import Link from "next/link"
 import useSWRMutation from "swr/mutation"
-import { ApiPath, request } from "../../../request"
+import { ApiPath, fetcher } from "../../../lib/fetcher"
 import { useCallback } from "react"
 import { signIn } from "next-auth/react"
 
 export default function SignUpPage() {
   const { trigger } = useSWRMutation(
     ApiPath.signUp,
-    (url, credentials) => request.post(url, credentials),
+    (url, credentials) => fetcher.post(url, credentials),
     {
       throwOnError: false,
     },

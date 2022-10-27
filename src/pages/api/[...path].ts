@@ -1,16 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { proxy } from "../../server/proxy"
-import { unstable_getServerSession } from "next-auth"
-import { authOptions } from "./auth/[...nextauth]"
+import { AuthCookie } from "../../server/cookies"
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   return new Promise(async (resolve, reject) => {
-    const session = await unstable_getServerSession(req, res, authOptions)
-    const authorization = session?.token
-
-    if (authorization) {
-      req.headers["Authorization"] = `Bearer ${authorization}`
-    }
+    AuthCookie.setRequestHeader(req, res)
 
     proxy.once("error", reject)
 
