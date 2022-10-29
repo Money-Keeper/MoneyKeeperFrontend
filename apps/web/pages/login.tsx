@@ -1,23 +1,24 @@
 import Link from "next/link"
+import { FormEvent, ReactNode, useCallback } from "react"
 import useSWRMutation from "swr/mutation"
 import { ApiPath, fetcher } from "@lib/fetcher"
-import { FormEvent, ReactNode, useCallback } from "react"
-import AuthLayout from "@layouts/auth-layout"
+import AuthLayout from "../layouts/auth-layout"
 import Head from "next/head"
+import Button from "@mk/ui/Button"
 
-export default function SignUpPage() {
+export default function LoginPage() {
   const { trigger, isMutating } = useSWRMutation(
-    ApiPath.register,
+    ApiPath.login,
     (url, credentials) => fetcher.post(url, credentials),
   )
 
-  const onSignIn = useCallback(
+  const onLogin = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       const formData = new FormData(e.currentTarget)
       const credentials = Object.fromEntries(formData.entries())
-      const data = await trigger(credentials)
-      console.log(data)
+      const data = trigger(credentials)
+      // console.log(data)
     },
     [trigger],
   )
@@ -25,27 +26,15 @@ export default function SignUpPage() {
   return (
     <div className="card w-full w-96 max-w-sm flex-shrink-0 bg-base-100 shadow-2xl">
       <div className="card-body">
-        <form onSubmit={onSignIn}>
+        <form onSubmit={onLogin}>
           <div className="form-control">
             <label className="label">
               <span className="label-text">Email</span>
             </label>
             <input
               type="text"
-              placeholder="email"
               value="login"
-              className="input-bordered input"
-            />
-          </div>
-
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Name</span>
-            </label>
-            <input
-              type="text"
-              placeholder="password"
-              value="name"
+              placeholder="email"
               className="input-bordered input"
             />
           </div>
@@ -55,37 +44,38 @@ export default function SignUpPage() {
               <span className="label-text">Password</span>
             </label>
             <input
-              type="password"
-              placeholder="password"
+              type="text"
               value="password"
+              placeholder="password"
               className="input-bordered input"
             />
+            {/*<label className="label">*/}
+            {/*  <a href="#" className="link-hover label-text-alt link">*/}
+            {/*    Forgot password?*/}
+            {/*  </a>*/}
+            {/*</label>*/}
           </div>
 
           <div className="form-control mt-6">
-            <button
-              type="submit"
-              className="btn-primary btn"
-              disabled={isMutating}
-            >
-              Sign Up
-            </button>
+            <Button type="submit" intend="primary" disabled={isMutating}>
+              Login
+            </Button>
           </div>
         </form>
 
         <div className="btn-link btn">
-          Already have an account? <Link href="/login">Login page</Link>
+          <Link href="/signup">Go to Sign Up page</Link>
         </div>
       </div>
     </div>
   )
 }
 
-SignUpPage.getLayout = function getLayout(page: ReactNode) {
+LoginPage.getLayout = function getLayout(page: ReactNode) {
   return (
     <AuthLayout>
       <Head>
-        <title>Sign Up | MoneyKeeper</title>
+        <title>Login | MoneyKeeper</title>
       </Head>
       {page}
     </AuthLayout>

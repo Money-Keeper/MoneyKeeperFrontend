@@ -1,6 +1,6 @@
 import NextAuth, { Session, User as AuthUser } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { fetcher, InternalApiPath } from "../../../lib/fetcher"
+import { fetcher, InternalApiPath } from "@lib/fetcher"
 import { JWT } from "next-auth/jwt"
 
 export interface User {
@@ -33,7 +33,7 @@ export const authOptions = {
   ],
   callbacks: {
     jwt: ({ token, user }: { token: JWT; user?: AuthUser }) => {
-      console.log(user)
+      // console.log(user)
       if (user) {
         token = { accessToken: user.accessToken }
       }
