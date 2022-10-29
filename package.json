@@ -1,62 +1,58 @@
 {
-  "name": "money-keeper",
-  "version": "0.1.0",
+  "name": "monorepo",
+  "version": "0.0.0",
   "private": true,
-  "engines": {
-    "node": ">=16.18.0",
-    "pnpm": ">=7.14.0",
-    "npm": "please-use-pnpm"
-  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "tailwindcss input.css --output output.css && next build",
-    "start": "next start",
-    "lint": "eslint --fix",
-    "prettier": "prettier --write .",
+    "build": "turbo run build",
+    "dev": "dotenv -- turbo run dev --parallel",
+    "dev:web": "dotenv -- turbo run dev --filter web",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "commit": "git add . && pnpm cz",
     "cz": "git-cz",
     "prepare": "husky install"
-  },
-  "dependencies": {
-    "axios": "^1.1.3",
-    "http-proxy": "^1.18.1",
-    "next": "^13.0.0",
-    "next-auth": "^4.15.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "swr": "2.0.0-rc.0",
-    "tailwind-merge": "^1.7.0",
-    "zod": "^3.19.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@commitlint/cz-commitlint": "^17.1.2",
-    "@tailwindcss/forms": "^0.5.3",
-    "@types/http-proxy": "^1.17.9",
-    "@types/node": "18.11.4",
-    "@types/react": "18.0.22",
-    "@types/react-dom": "18.0.7",
-    "autoprefixer": "^10.4.13",
-    "clsx": "^1.2.1",
     "commitizen": "^4.2.5",
-    "concurrently": "^7.5.0",
-    "cookies-next": "^2.1.1",
-    "daisyui": "^2.33.0",
-    "eslint": "8.26.0",
-    "eslint-config-next": "^13.0.0",
+    "eslint-config-custom": "workspace:0.0.0",
     "husky": "^8.0.1",
     "inquirer": "^8.2.5",
     "lint-staged": "^13.0.3",
-    "postcss": "^8.4.18",
-    "prettier": "^2.7.1",
-    "prettier-plugin-tailwindcss": "^0.1.13",
-    "tailwindcss": "^3.2.1",
-    "typescript": "4.8.4"
+    "prettier": "latest",
+    "turbo": "latest"
   },
+  "engines": {
+    "node": ">=16.18.0",
+    "pnpm": ">=7.14.0",
+    "npm": "please-use-pnpm"
+  },
+  "packageManager": "pnpm@7.14.1",
   "config": {
     "commitizen": {
       "path": "@commitlint/cz-commitlint"
     }
+  },
+  "lint-staged": {
+    "apps/**/*.{js,ts,jsx,tsx}": [
+      "eslint --fix",
+      "pnpm format"
+    ],
+    "packages/ui/**/*.{js,ts,jsx,tsx}": [
+      "eslint --fix",
+      "pnpm format"
+    ],
+    "*.json": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "dotenv-cli": "^6.0.0"
   }
 }

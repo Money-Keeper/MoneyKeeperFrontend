@@ -8,7 +8,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <title>MoneyKeeper</title>
       </Head>
 
-      <div className="bg-base-100">{children}</div>
+      <div className="bg-base-200">{children}</div>
     </>
   )
 }

@@ -1,4 +1,0 @@
-{
-  "**/*.{ts,tsx}": ["pnpm lint", "pnpm prettier"],
-  "**/*.{css,json,html}": "pnpm prettier"
-}
