@@ -1,10 +1,9 @@
 import Link from "next/link"
 import useSWRMutation from "swr/mutation"
-import { ApiPath, fetcher, InternalApiPath } from "../lib/fetcher"
+import { ApiPath, fetcher } from "@lib/fetcher"
 import { FormEvent, ReactNode, useCallback } from "react"
-import AuthLayout from "../layouts/auth-layout"
+import AuthLayout from "@layouts/auth-layout"
 import Head from "next/head"
-import LoginPage from "./login"
 
 export default function SignUpPage() {
   const { trigger, isMutating } = useSWRMutation(

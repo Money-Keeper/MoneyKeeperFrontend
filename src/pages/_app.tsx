@@ -2,7 +2,6 @@ import "../styles/globals.css"
 import { AppProps } from "next/app"
 import { ReactElement, ReactNode } from "react"
 import { NextPage } from "next"
-import BaseLayout from "../layouts/base-layout"
 import { SessionProvider } from "next-auth/react"
 
 type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {

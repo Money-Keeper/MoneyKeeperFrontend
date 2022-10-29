@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { FormEvent, ReactNode, useCallback } from "react"
 import useSWRMutation from "swr/mutation"
-import { ApiPath, fetcher } from "../lib/fetcher"
-import AuthLayout from "../layouts/auth-layout"
+import { ApiPath, fetcher } from "@lib/fetcher"
+import AuthLayout from "@layouts/auth-layout"
 import Head from "next/head"
 
 export default function LoginPage() {
