@@ -10,11 +10,10 @@ const ApiPath = {
   register: `${baseApiPath}/register`,
 }
 
-const internalApiPath = "/"
+const internalApiPath = "/api"
 
 const InternalApiPath = {
-  login: `${internalApiPath}/auth/login`,
-  signUp: `${internalApiPath}/auth/signup`,
+  currentUser: `${internalApiPath}/currentUser`,
 }
 
 export { ApiPath, InternalApiPath }

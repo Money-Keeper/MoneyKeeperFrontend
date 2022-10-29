@@ -1,14 +1,14 @@
-import "../styles/globals.css"
 import { PropsWithChildren } from "react"
+import Head from "next/head"
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en">
-      <head>
+    <>
+      <Head>
         <title>MoneyKeeper</title>
-      </head>
+      </Head>
 
-      <body className="bg-sky-300">{children}</body>
-    </html>
+      <div className="bg-base-100">{children}</div>
+    </>
   )
 }
