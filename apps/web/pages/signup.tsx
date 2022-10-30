@@ -1,28 +1,15 @@
 import Link from "next/link"
 import useSWRMutation from "swr/mutation"
 import { ApiPath, fetcher } from "@lib/fetcher"
-import { FormEvent, ReactNode, useCallback } from "react"
+import { ReactNode } from "react"
 import AuthLayout from "../layouts/auth-layout"
 import Head from "next/head"
-import Button from "@mk/ui/Button"
+import Button from "@mk/ui/button"
+import { z } from "zod"
+import { Form, useForm } from "@mk/ui/form"
+import Space from "@mk/ui/space"
 
 export default function SignUpPage() {
-  const { trigger, isMutating } = useSWRMutation(
-    ApiPath.register,
-    (url, credentials) => fetcher.post(url, credentials),
-  )
-
-  const onSignIn = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      const formData = new FormData(e.currentTarget)
-      const credentials = Object.fromEntries(formData.entries())
-      const data = await trigger(credentials)
-      // console.log(data)
-    },
-    [trigger],
-  )
-
   return (
     <div className="card w-full w-96 max-w-sm flex-shrink-0 bg-base-100 shadow-2xl">
       <div className="card-body">
@@ -76,6 +63,33 @@ export default function SignUpPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+const signupSchema = z.object({
+  name: z.string().min(1).max(64),
+  login: z.string().email(),
+  password: z.string().min(8).max(60),
+})
+
+function SignupForm() {
+  const { trigger, isMutating } = useSWRMutation(
+    ApiPath.register,
+    (url, credentials) => fetcher.post(url, credentials),
+  )
+
+  const form = useForm({ schema: signupSchema })
+
+  return (
+    <Form
+      form={form}
+      onSubmit={(values) => {
+        console.log(values.login)
+        trigger(values)
+      }}
+    >
+      <Space direction="column" gap="medium"></Space>
+    </Form>
   )
 }
 

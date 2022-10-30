@@ -9,7 +9,10 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.3",
-    "cva": "npm:class-variance-authority@^0.2.4"
+    "@hookform/resolvers": "^2.9.10",
+    "class-variance-authority": "^0.2.4",
+    "react-hook-form": "^7.38.0",
+    "zod": "^3.19.1"
   },
   "peerDependencies": {
     "react": "^18.2.0",
@@ -26,6 +29,7 @@
     "eslint-config-custom": "workspace:*",
     "postcss": "^8.4.18",
     "prettier-plugin-tailwindcss": "^0.1.13",
+    "react-icons": "^4.6.0",
     "tailwindcss": "^3.2.1",
     "tsconfig": "workspace:*",
     "typescript": "^4.8.4"
