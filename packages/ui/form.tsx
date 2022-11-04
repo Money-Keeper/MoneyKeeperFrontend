@@ -8,6 +8,9 @@ import {
 } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import type { UseFormProps, UseFormReturn } from "react-hook-form/dist/types"
+import createContext from "./context"
+import Space from "./space"
+import { useAutoAnimate } from "@formkit/auto-animate/react"
 
 type FormValues = Record<string, any>
 
@@ -22,19 +25,33 @@ const useForm = <TFormValues extends FormValues>(
   })
 }
 
+type ServerErrors = Record<string, string>
+
 interface FormProps<TSchema extends FormValues> {
   form: UseFormReturn<TSchema>
   onSubmit: (values: TSchema) => void
+  serverErrors?: ServerErrors
 }
+
+const [InternalFormProvider, useInternalForm] = createContext<{
+  serverErrors: ServerErrors
+}>("InternalFormContext")
 
 const Form = <TSchema extends FormValues>({
   form,
   onSubmit,
+  serverErrors = {},
   children,
 }: PropsWithChildren<FormProps<TSchema>>) => {
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>{children}</form>
+      <InternalFormProvider serverErrors={serverErrors}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <Space direction="column" gap="medium">
+            {children}
+          </Space>
+        </form>
+      </InternalFormProvider>
     </FormProvider>
   )
 }
@@ -47,11 +64,14 @@ interface FormFieldProps {
 const FormField = ({ label, children }: PropsWithChildren<FormFieldProps>) => {
   const name = children.props.name
   const { errors } = useFormState({ name })
+  const { serverErrors } = useInternalForm()
 
-  const error = errors[name]
+  const [containerRef] = useAutoAnimate<HTMLDivElement>()
+
+  const error = errors[name] || serverErrors[name]
 
   return (
-    <div className="form-control">
+    <div ref={containerRef} className="form-control">
       {label && (
         <label className="label" htmlFor={name}>
           <span className={clsx("label-text", error && "text-error")}>
@@ -62,7 +82,9 @@ const FormField = ({ label, children }: PropsWithChildren<FormFieldProps>) => {
 
       {React.cloneElement(children, { hasError: !!error })}
 
-      {error && <div className="text-error">{JSON.stringify(error)}</div>}
+      {error && (
+        <div className="text-error text-xs">{JSON.stringify(error)}</div>
+      )}
     </div>
   )
 }

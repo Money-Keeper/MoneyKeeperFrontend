@@ -1,2 +1,2 @@
 export { ApiPath, InternalApiPath } from "./path"
-export { fetcher } from "./fetcher"
+export { fetcher as default, ValidationError } from "./fetcher"

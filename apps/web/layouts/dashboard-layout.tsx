@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react"
-import AuthBoundary from "./auth-boundary"
+import AuthBoundary from "features/auth/auth-boundary"
 import BaseLayout from "./base-layout"
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
