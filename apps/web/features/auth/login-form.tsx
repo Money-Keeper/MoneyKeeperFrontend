@@ -1,49 +1,19 @@
-import { z } from "zod"
 import { Form, FormField, useForm } from "@mk/ui/form"
 import Input from "@mk/ui/input"
 import Button from "@mk/ui/button"
-import { useToastStore } from "@lib/toast"
-import useSWRMutation from "swr/mutation"
-import fetcher, { ApiPath } from "@lib/fetcher"
-import { signIn } from "next-auth/react"
+import { LoginRequest, loginSchema } from "./auth-schema"
+import { useMoneyKeeperSignIn } from "./provider-hooks"
+import fetcher from "@lib/fetcher"
+import { ApiPath } from "@api/path"
 
-export const loginSchema = z.object({
-  login: z
-    .string({ required_error: "Login is required" })
-    .trim()
-    .email({ message: "Invalid email" }),
-  password: z
-    .string({ required_error: "Password is required" })
-    .min(8, { message: "Password should have at least 8 character" })
-    .max(60, { message: "Password should have less than 60 characters" }),
-})
-
-function useLoginRequest() {
-  const pushToast = useToastStore((s) => s.push)
-
-  const { trigger, isMutating, error } = useSWRMutation(
-    ApiPath.login,
-    async (url, credentials) => {
-      const { data } = await fetcher.post<{ token: string }>(url, {
-        data: credentials,
-      })
-
-      if (data.token) {
-        await signIn("money-keeper", { accessToken: data.token })
-      }
-    },
-    {
-      throwOnError: false,
-      onSuccess: () =>
-        pushToast({ message: "Logged in successfully", type: "success" }),
-    },
-  )
-
-  return { loading: isMutating, login: trigger, errors: error?.errors || {} }
+const loginUser = async (data: LoginRequest) => {
+  return fetcher.post<{ token: string }>(ApiPath.login, {
+    data,
+  })
 }
 
 function LoginForm() {
-  const { loading, errors, login } = useLoginRequest()
+  const { mutate: login, loading, errors } = useMoneyKeeperSignIn(loginUser)
   const form = useForm({ schema: loginSchema })
 
   return (

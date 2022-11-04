@@ -3,6 +3,7 @@ import { AppProps } from "next/app"
 import { ReactElement, ReactNode } from "react"
 import { NextPage } from "next"
 import { SessionProvider } from "next-auth/react"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -12,6 +13,18 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+    },
+    mutations: {
+      retry: false,
+    },
+  },
+})
+
 export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
@@ -20,8 +33,10 @@ export default function MyApp({
   const getLayout = Component.getLayout || ((page) => page)
 
   return (
-    <SessionProvider session={session}>
-      {getLayout(<Component {...pageProps} />)}
-    </SessionProvider>
+    <QueryClientProvider client={queryClient}>
+      <SessionProvider session={session}>
+        {getLayout(<Component {...pageProps} />)}
+      </SessionProvider>
+    </QueryClientProvider>
   )
 }

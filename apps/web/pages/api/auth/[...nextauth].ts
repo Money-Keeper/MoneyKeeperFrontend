@@ -1,7 +1,8 @@
 import NextAuth, { Session, User as AuthUser } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { fetcher, InternalApiPath } from "@lib/fetcher"
+import { InternalApiPath } from "@api/path"
 import { JWT } from "next-auth/jwt"
+import fetcher from "@lib/fetcher"
 
 export interface User {
   email: string
@@ -17,7 +18,7 @@ export const authOptions = {
       // @ts-ignore
       async authorize(credentials = {}) {
         const user = await fetcher.post<User>(InternalApiPath.currentUser, {
-          token: credentials.accessToken,
+          data: { token: credentials.accessToken },
         })
 
         if (user.data) {
@@ -33,7 +34,7 @@ export const authOptions = {
   ],
   callbacks: {
     jwt: ({ token, user }: { token: JWT; user?: AuthUser }) => {
-      // console.log(user)
+      console.log(user)
       if (user) {
         token = { accessToken: user.accessToken }
       }
@@ -48,6 +49,7 @@ export const authOptions = {
   },
   pages: {
     signIn: "/login",
+    error: "/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
 }

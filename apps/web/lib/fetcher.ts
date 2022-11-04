@@ -70,9 +70,9 @@ class Fetcher {
 
 const fetcher = new Fetcher()
 
-export { fetcher, ValidationError }
+export default fetcher
 
-class ValidationError extends Error {
+export class ValidationError extends Error {
   errors: Record<string, string> = {}
 
   constructor(errors: Record<string, string[] | undefined>) {
