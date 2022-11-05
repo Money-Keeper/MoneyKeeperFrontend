@@ -1,4 +1,4 @@
-import cva, { VariantProps } from "./cva"
+import cva, { VariantProps } from "../cva"
 import { ButtonHTMLAttributes, ElementType } from "react"
 
 const buttonVariants = cva("btn", {

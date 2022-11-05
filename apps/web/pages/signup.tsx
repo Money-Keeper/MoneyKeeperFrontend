@@ -2,8 +2,8 @@ import Link from "next/link"
 import { ReactNode } from "react"
 import AuthLayout from "../layouts/auth-layout"
 import Head from "next/head"
-import Button from "@mk/ui/button"
-import Divider from "@mk/ui/divider"
+import Button from "packages/ui/components/button"
+import Divider from "packages/ui/components/divider"
 import SignupForm from "features/auth/signup-form"
 
 export default function SignUpPage() {

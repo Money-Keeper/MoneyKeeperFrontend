@@ -1,5 +1,5 @@
-import cva, { VariantProps } from "./cva"
-import { HTMLAttributes } from "react"
+import cva, { VariantProps } from "../cva"
+import { ElementType, forwardRef, HTMLAttributes } from "react"
 
 const spaceVariants = cva("flex", {
   variants: {
@@ -40,17 +40,14 @@ const spaceVariants = cva("flex", {
 
 interface SpaceProps
   extends VariantProps<typeof spaceVariants>,
-    HTMLAttributes<HTMLDivElement> {}
+    HTMLAttributes<HTMLDivElement> {
+  as?: ElementType
+}
 
-export default function Space({
-  direction,
-  align,
-  justify,
-  gap,
-  wrap,
-  className,
-  ...restProps
-}: SpaceProps) {
+export default forwardRef<HTMLDivElement, SpaceProps>(function Space(
+  { direction, align, justify, gap, wrap, className, ...restProps }: SpaceProps,
+  ref,
+) {
   return (
     <div
       className={spaceVariants({
@@ -61,9 +58,10 @@ export default function Space({
         wrap,
         className,
       })}
+      ref={ref}
       {...restProps}
     >
       {restProps.children}
     </div>
   )
-}
+})

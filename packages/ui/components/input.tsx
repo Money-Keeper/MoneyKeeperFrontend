@@ -1,5 +1,5 @@
 import { InputHTMLAttributes } from "react"
-import cva, { VariantProps } from "./cva"
+import cva, { VariantProps } from "../cva"
 
 const inputVariants = cva("input input-bordered w-full max-w-xs", {
   variants: {

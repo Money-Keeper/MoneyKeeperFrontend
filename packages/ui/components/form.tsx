@@ -8,7 +8,7 @@ import {
 } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import type { UseFormProps, UseFormReturn } from "react-hook-form/dist/types"
-import createContext from "./context"
+import createContext from "../context"
 import Space from "./space"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 

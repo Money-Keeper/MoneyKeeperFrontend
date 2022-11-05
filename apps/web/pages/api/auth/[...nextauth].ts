@@ -1,6 +1,6 @@
 import NextAuth, { Session, User as AuthUser } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { InternalApiPath } from "@api/path"
+import { InternalApiPath } from "@server/path"
 import { JWT } from "next-auth/jwt"
 import fetcher from "@lib/fetcher"
 

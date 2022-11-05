@@ -1,10 +1,10 @@
-import { Form, FormField, useForm } from "@mk/ui/form"
-import Input from "@mk/ui/input"
-import Button from "@mk/ui/button"
+import { Form, FormField, useForm } from "packages/ui/components/form"
+import Input from "packages/ui/components/input"
+import Button from "packages/ui/components/button"
 import { SignupRequest, signupSchema } from "./auth-schema"
 import { useMoneyKeeperSignIn } from "./provider-hooks"
 import fetcher from "@lib/fetcher"
-import { ApiPath } from "@api/path"
+import { ApiPath } from "@server/path"
 
 const signupUser = async (data: SignupRequest) => {
   return fetcher.post<{ token: string }>(ApiPath.register, {

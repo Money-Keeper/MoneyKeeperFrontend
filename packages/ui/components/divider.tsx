@@ -1,4 +1,4 @@
-import cva, { VariantProps } from "./cva"
+import cva, { VariantProps } from "../cva"
 import { PropsWithChildren } from "react"
 
 const dividerVariants = cva("divider", {
