@@ -1,71 +1,22 @@
 import Link from "next/link"
-import { FormEvent, ReactNode, useCallback } from "react"
-import useSWRMutation from "swr/mutation"
-import { ApiPath, fetcher } from "@lib/fetcher"
+import { ReactNode } from "react"
 import AuthLayout from "../layouts/auth-layout"
 import Head from "next/head"
-import Button from "@mk/ui/Button"
+import Button from "@mk/ui/components/button"
+import Divider from "@mk/ui/components/divider"
+import LoginForm from "features/auth/login-form"
 
 export default function LoginPage() {
-  const { trigger, isMutating } = useSWRMutation(
-    ApiPath.login,
-    (url, credentials) => fetcher.post(url, credentials),
-  )
-
-  const onLogin = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      const formData = new FormData(e.currentTarget)
-      const credentials = Object.fromEntries(formData.entries())
-      const data = trigger(credentials)
-      // console.log(data)
-    },
-    [trigger],
-  )
-
   return (
     <div className="card w-full w-96 max-w-sm flex-shrink-0 bg-base-100 shadow-2xl">
       <div className="card-body">
-        <form onSubmit={onLogin}>
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Email</span>
-            </label>
-            <input
-              type="text"
-              value="login"
-              placeholder="email"
-              className="input-bordered input"
-            />
-          </div>
+        <LoginForm />
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Password</span>
-            </label>
-            <input
-              type="text"
-              value="password"
-              placeholder="password"
-              className="input-bordered input"
-            />
-            {/*<label className="label">*/}
-            {/*  <a href="#" className="link-hover label-text-alt link">*/}
-            {/*    Forgot password?*/}
-            {/*  </a>*/}
-            {/*</label>*/}
-          </div>
+        <Divider>OR</Divider>
 
-          <div className="form-control mt-6">
-            <Button type="submit" intend="primary" disabled={isMutating}>
-              Login
-            </Button>
-          </div>
-        </form>
-
-        <div className="btn-link btn">
-          <Link href="/signup">Go to Sign Up page</Link>
-        </div>
+        <Button as={Link} href="/signup" intend="link">
+          Sign up now
+        </Button>
       </div>
     </div>
   )
@@ -77,6 +28,7 @@ LoginPage.getLayout = function getLayout(page: ReactNode) {
       <Head>
         <title>Login | MoneyKeeper</title>
       </Head>
+
       {page}
     </AuthLayout>
   )
