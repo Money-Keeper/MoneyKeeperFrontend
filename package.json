@@ -7,9 +7,10 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
+    "build": "dotenv -- turbo run build",
     "dev": "dotenv -- turbo run dev --parallel",
     "dev:web": "dotenv -- turbo run dev --filter web",
+    "build:web": "dotenv -- turbo run build --filter web",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "commit": "git add . && pnpm cz",

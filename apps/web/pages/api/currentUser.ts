@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { z } from "zod"
-import { ApiPath, fetcher } from "../../lib/fetcher"
+import fetcher from "@lib/fetcher"
+import { ApiPath } from "@server/path"
 
 const userSchema = z.object({
   login: z.string(),
@@ -18,11 +19,14 @@ export default async function handler(
       return res.status(401).json({ message: "Unauthorized" })
     }
 
-    const userResponse = await fetcher.get(ApiPath.user, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const userResponse = await fetcher.get<z.infer<typeof userSchema>[]>(
+      ApiPath.user,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    })
+    )
     const parsedUser = userSchema.parse(userResponse.data[0])
     return res.status(200).json({ ...parsedUser, email: parsedUser.login })
   } catch (e) {
