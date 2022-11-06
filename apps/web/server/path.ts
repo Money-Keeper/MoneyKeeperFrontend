@@ -1,4 +1,4 @@
-const baseApiPath = "/api"
+const baseApiPath = "/api/v1"
 
 const ApiPath = {
   expense: `${baseApiPath}/expenses`,
@@ -11,9 +11,6 @@ const ApiPath = {
 }
 
 const internalApiPath = "/api"
-
-const InternalApiPath = {
-  currentUser: `${internalApiPath}/currentUser`,
-}
+const InternalApiPath = {}
 
 export { ApiPath, InternalApiPath }

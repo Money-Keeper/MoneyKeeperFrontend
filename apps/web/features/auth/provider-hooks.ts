@@ -12,7 +12,11 @@ function useMoneyKeeperSignIn<T = unknown>(
     mutationFn: fetchToken,
     onSuccess: async ({ data }) => {
       pushToast({ message: "Welcome onboard!", type: "success" })
-      await signIn("money-keeper", { accessToken: data.token })
+      await signIn(
+        "money-keeper",
+        { accessToken: data.token },
+        { callbackUrl: `${window.location.origin}/dashboard` },
+      )
     },
   })
 

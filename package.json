@@ -7,15 +7,16 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
+    "build": "dotenv -- turbo run build",
     "dev": "dotenv -- turbo run dev --parallel",
-    "dev:web": "dotenv -- turbo run dev --filter web",
+    "dev:web": "dotenv -- turbo run dev --filter web --no-daemon",
+    "build:web": "dotenv -- turbo run build --filter web",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "commit": "git add . && pnpm cz",
     "cz": "git-cz",
-    "clear": "npx rimraf **/node_modules",
-    "prepare": "husky install"
+    "clear": "npx rimraf **/node_modules && npx rimraf **/dist && npx rimraf **/*.js",
+    "prepare": "npx husky install"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
@@ -29,11 +30,6 @@
     "prettier": "latest",
     "rimraf": "^3.0.2",
     "turbo": "latest"
-  },
-  "engines": {
-    "node": ">=16.18.0",
-    "pnpm": ">=7.14.0",
-    "npm": "please-use-pnpm"
   },
   "packageManager": "pnpm@7.14.1",
   "config": {
