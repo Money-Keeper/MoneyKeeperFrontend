@@ -4,8 +4,7 @@ import { signIn } from "next-auth/react"
 import { ValidationError } from "@mk/fetcher"
 
 const HOST_NAME =
-  process.env.VERSEL_ENV === `production` ||
-  process.env.VERSEL_ENV === `preview`
+  typeof process.env.VERCEL_URL !== "undefined"
     ? process.env.VERCEL_URL
     : "http://localhost:3000"
 
