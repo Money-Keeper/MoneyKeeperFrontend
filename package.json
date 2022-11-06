@@ -31,11 +31,6 @@
     "rimraf": "^3.0.2",
     "turbo": "latest"
   },
-  "engines": {
-    "node": ">=16.18.0",
-    "pnpm": ">=7.14.0",
-    "npm": "please-use-pnpm"
-  },
   "packageManager": "pnpm@7.14.1",
   "config": {
     "commitizen": {
