@@ -17,13 +17,12 @@ function useMoneyKeeperSignIn<T = unknown>(
   const { mutate, isLoading, error } = useMutation({
     mutationFn: fetchToken,
     onSuccess: async ({ data }) => {
-      alert(JSON.stringify(data))
-      console.log(HOST_NAME)
+      alert(HOST_NAME)
       await signIn(
         "money-keeper",
         { accessToken: data.token },
         { callbackUrl: `${window.location.origin}/dashboard` },
-      )
+      ).catch((e) => console.log(e))
       pushToast({ message: "Welcome onboard!", type: "success" })
     },
   })
