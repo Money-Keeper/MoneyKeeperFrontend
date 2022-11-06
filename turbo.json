@@ -8,7 +8,7 @@
     "web#build": {
       "dependsOn": ["^build"],
       "env": ["API_SERVICE_URL", "NEXTAUTH_SECRET"],
-      "outputs": [".next/**"]
+      "outputs": ["dist/**", ".next/**"]
     },
     "lint": {
       "outputs": []
