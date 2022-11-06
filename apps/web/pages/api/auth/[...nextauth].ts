@@ -24,6 +24,7 @@ export const authOptions = {
       credentials: { accessToken: { label: "Access Token", type: "text" } },
       // @ts-ignore
       async authorize({ accessToken } = { accessToken: "" }) {
+        console.log("accessToken", accessToken, HOST_NAME)
         if (!accessToken) {
           return null
         }

@@ -7,9 +7,11 @@ import fetcher from "@lib/fetcher"
 import { ApiPath } from "@server/path"
 
 const loginUser = async (data: LoginRequest) => {
-  return fetcher.post<{ token: string }>(ApiPath.login, {
+  const res = await fetcher.post<{ token: string }>(ApiPath.login, {
     data,
   })
+  alert(JSON.stringify(res))
+  return res
 }
 
 function LoginForm() {
