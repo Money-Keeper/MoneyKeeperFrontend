@@ -28,6 +28,15 @@ function useAuth() {
 
 export default function AuthBoundary({ children }: PropsWithChildren) {
   const isAuthenticated = useAuth()
+  const router = useRouter()
 
-  return isAuthenticated ? <>{children}</> : null
+  if (isAuthenticated && !authPages.includes(router.route)) {
+    return <>{children}</>
+  }
+
+  if (!isAuthenticated && authPages.includes(router.route)) {
+    return <>{children}</>
+  }
+
+  return null
 }
