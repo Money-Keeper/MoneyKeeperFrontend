@@ -34,7 +34,6 @@ const spaceVariants = cva("flex", {
   },
   defaultVariants: {
     direction: "row",
-    align: "center",
   },
 })
 
@@ -45,11 +44,22 @@ interface SpaceProps
 }
 
 export default forwardRef<HTMLDivElement, SpaceProps>(function Space(
-  { direction, align, justify, gap, wrap, className, ...restProps }: SpaceProps,
+  {
+    direction,
+    align,
+    justify,
+    gap,
+    wrap,
+    className,
+    as,
+    ...restProps
+  }: SpaceProps,
   ref,
 ) {
+  const Component = as ?? "div"
+
   return (
-    <div
+    <Component
       className={spaceVariants({
         direction,
         align,
@@ -62,6 +72,6 @@ export default forwardRef<HTMLDivElement, SpaceProps>(function Space(
       {...restProps}
     >
       {restProps.children}
-    </div>
+    </Component>
   )
 })

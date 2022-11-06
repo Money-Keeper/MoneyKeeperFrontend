@@ -5,7 +5,7 @@ import CrossCircle from "../icons/cross-circle"
 import ExclamationTriangle from "../icons/exclamation-triangle"
 import InfoCircle from "../icons/info-circle"
 
-const alertVariants = cva("alert", {
+const alertVariants = cva("alert flex items-center", {
   variants: {
     type: {
       success: "alert-success",
@@ -38,13 +38,13 @@ export default function Alert({
 function getIcon(type: AlertProps["type"]): ReactNode {
   switch (type) {
     case "success":
-      return <CheckCircle />
+      return <CheckCircle size="1.2em" />
     case "error":
-      return <CrossCircle />
+      return <CrossCircle size="1.2em" />
     case "warning":
-      return <ExclamationTriangle />
+      return <ExclamationTriangle size="1.2em" />
     case "info":
-      return <InfoCircle />
+      return <InfoCircle size="1.2em" />
     default:
       return null
   }

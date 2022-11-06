@@ -14,6 +14,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "commit": "git add . && pnpm cz",
     "cz": "git-cz",
+    "clear": "npx rimraf **/node_modules",
     "prepare": "husky install"
   },
   "devDependencies": {
@@ -26,6 +27,7 @@
     "inquirer": "^8.2.5",
     "lint-staged": "^13.0.3",
     "prettier": "latest",
+    "rimraf": "^3.0.2",
     "turbo": "latest"
   },
   "engines": {

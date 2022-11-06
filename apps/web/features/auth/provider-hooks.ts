@@ -1,12 +1,12 @@
-import { useToastStore } from "@lib/toast"
+import { useToast } from "@lib/toast"
 import { useMutation } from "@tanstack/react-query"
 import { signIn } from "next-auth/react"
-import { ValidationError } from "@lib/fetcher"
+import { ValidationError } from "@mk/fetcher"
 
 function useMoneyKeeperSignIn<T = unknown>(
   fetchToken: (data: T) => Promise<{ data: { token: string } }>,
 ) {
-  const pushToast = useToastStore((s) => s.push)
+  const pushToast = useToast((s) => s.push)
 
   const { mutate, isLoading, error } = useMutation({
     mutationFn: fetchToken,

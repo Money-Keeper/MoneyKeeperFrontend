@@ -53,10 +53,13 @@ export default function Button({
   shape,
   outline,
   loading,
+  as,
   ...restProps
 }: ButtonProps) {
+  const Component = as ?? "button"
+
   return (
-    <button
+    <Component
       className={buttonVariants({
         intend,
         size,
@@ -69,6 +72,6 @@ export default function Button({
       {...restProps}
     >
       {restProps.children}
-    </button>
+    </Component>
   )
 }

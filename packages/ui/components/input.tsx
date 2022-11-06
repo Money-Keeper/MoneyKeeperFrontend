@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from "react"
+import { forwardRef, InputHTMLAttributes } from "react"
 import cva, { VariantProps } from "../cva"
 
 const inputVariants = cva("input input-bordered w-full max-w-xs", {
@@ -21,16 +21,15 @@ interface InputProps
   extends VariantProps<typeof inputVariants>,
     Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {}
 
-export default function Input({
-  size,
-  hasError,
-  className,
-  ...restProps
-}: InputProps) {
+export default forwardRef<HTMLInputElement, InputProps>(function Input(
+  { size, hasError, className, ...restProps },
+  ref,
+) {
   return (
     <input
+      ref={ref}
       className={inputVariants({ size, hasError, className })}
       {...restProps}
     />
   )
-}
+})

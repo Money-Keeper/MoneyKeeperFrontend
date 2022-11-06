@@ -83,7 +83,13 @@ const FormField = ({ label, children }: PropsWithChildren<FormFieldProps>) => {
       {React.cloneElement(children, { hasError: !!error })}
 
       {error && (
-        <div className="text-error text-xs">{JSON.stringify(error)}</div>
+        <div className="text-error text-xs mt-1">
+          {typeof error === "string"
+            ? error
+            : typeof error.message === "string"
+            ? error.message
+            : ""}
+        </div>
       )}
     </div>
   )

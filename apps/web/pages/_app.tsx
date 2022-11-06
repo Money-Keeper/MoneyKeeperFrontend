@@ -4,7 +4,7 @@ import { ReactElement, ReactNode } from "react"
 import { NextPage } from "next"
 import { SessionProvider } from "next-auth/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { Router } from "next/router"
+import Router from "next/router"
 
 type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -21,7 +21,6 @@ const queryClient = new QueryClient({
       retry: false,
       onError: async (error: any) => {
         if (error?.response?.status === 401) {
-          // @ts-ignore
           await Router.push("/login")
         }
       },

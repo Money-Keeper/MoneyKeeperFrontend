@@ -1,6 +1,6 @@
-import { Form, FormField, useForm } from "packages/ui/components/form"
-import Input from "packages/ui/components/input"
-import Button from "packages/ui/components/button"
+import { Form, FormField, useForm } from "@mk/ui/components/form"
+import Input from "@mk/ui/components/input"
+import Button from "@mk/ui/components/button"
 import { SignupRequest, signupSchema } from "./auth-schema"
 import { useMoneyKeeperSignIn } from "./provider-hooks"
 import fetcher from "@lib/fetcher"
@@ -14,17 +14,10 @@ const signupUser = async (data: SignupRequest) => {
 
 function SignupForm() {
   const { mutate: signup, loading, errors } = useMoneyKeeperSignIn(signupUser)
-  const form = useForm({ schema: signupSchema })
+  const form = useForm({ schema: signupSchema, reValidateMode: "onChange" })
 
   return (
-    <Form
-      form={form}
-      serverErrors={errors}
-      onSubmit={(values) => {
-        console.log(values.login)
-        signup(values)
-      }}
-    >
+    <Form form={form} serverErrors={errors} onSubmit={signup}>
       <FormField label="Name">
         <Input type="text" placeholder="Name" {...form.register("name")} />
       </FormField>
@@ -39,13 +32,13 @@ function SignupForm() {
 
       <FormField label="Password">
         <Input
-          type="text"
+          type="password"
           placeholder="Password"
           {...form.register("password")}
         />
       </FormField>
 
-      <Button type="submit" intend="primary" loading={loading}>
+      <Button className="mt-5" type="submit" intend="primary" loading={loading}>
         Sign Up
       </Button>
     </Form>

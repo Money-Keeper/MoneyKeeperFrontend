@@ -1,6 +1,6 @@
-import { Form, FormField, useForm } from "packages/ui/components/form"
-import Input from "packages/ui/components/input"
-import Button from "packages/ui/components/button"
+import { Form, FormField, useForm } from "@mk/ui/components/form"
+import Input from "@mk/ui/components/input"
+import Button from "@mk/ui/components/button"
 import { LoginRequest, loginSchema } from "./auth-schema"
 import { useMoneyKeeperSignIn } from "./provider-hooks"
 import fetcher from "@lib/fetcher"
@@ -14,17 +14,10 @@ const loginUser = async (data: LoginRequest) => {
 
 function LoginForm() {
   const { mutate: login, loading, errors } = useMoneyKeeperSignIn(loginUser)
-  const form = useForm({ schema: loginSchema })
+  const form = useForm({ schema: loginSchema, reValidateMode: "onChange" })
 
   return (
-    <Form
-      form={form}
-      serverErrors={errors}
-      onSubmit={(values) => {
-        console.log(values)
-        login(values)
-      }}
-    >
+    <Form form={form} serverErrors={errors} onSubmit={login}>
       <FormField label="Email">
         <Input
           type="text"
@@ -35,13 +28,13 @@ function LoginForm() {
 
       <FormField label="Password">
         <Input
-          type="text"
+          type="password"
           placeholder="Password"
           {...form.register("password")}
         />
       </FormField>
 
-      <Button type="submit" intend="primary" loading={loading}>
+      <Button className="mt-5" type="submit" intend="primary" loading={loading}>
         Login
       </Button>
     </Form>

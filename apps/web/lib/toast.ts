@@ -47,7 +47,7 @@ const useToastMessages = () => {
       clearTimeout(timeout.current)
       timeout.current = window.setTimeout(() => {
         state.remove(state.list[0].id)
-      }, 3000)
+      }, 7000)
     })
 
     return () => clearTimeout(timeout.current)

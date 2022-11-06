@@ -40,7 +40,7 @@ const handle = <F extends (...args: any[]) => any>(
 ) => {
   return async (...args: Parameters<F>): Promise<ReturnPromiseType<F>> => {
     try {
-      return callback(...args)
+      return await callback(...args)
     } catch (error: any | AxiosError) {
       return catchError(error, notificator)
     }
