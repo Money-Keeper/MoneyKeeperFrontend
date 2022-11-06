@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios"
-import { toCamelCase } from "./utils"
+import { toCamelCase, isDev } from "./utils"
 
 interface Notificator {
   push: (notification: {
@@ -22,10 +22,10 @@ class Fetcher {
     handle(this.options.notificator, axios.delete<T>)(url, config)
 
   post = <T = unknown, D = any>(url: string, config: AxiosRequestConfig<D>) =>
-    handle(this.options.notificator, axios.post<T>)(url, config)
+    handle(this.options.notificator, axios.post<T>)(url, config.data, config)
 
   put = <T = unknown, D = any>(url: string, config: AxiosRequestConfig<D>) =>
-    handle(this.options.notificator, axios.put<T>)(url, config)
+    handle(this.options.notificator, axios.put<T>)(url, config.data, config)
 }
 
 type ReturnPromiseType<T extends (...args: any) => Promise<any>> = T extends (
@@ -50,7 +50,7 @@ const handle = <F extends (...args: any[]) => any>(
 const catchError = (error: any | AxiosError, notificator?: Notificator) => {
   if (!axios.isAxiosError(error) || !error.response) {
     notificator?.push({
-      message: "An unexpected error occurred.",
+      message: isDev() ? error.message : "An unexpected error occurred.",
       type: "error",
     })
     throw error
@@ -69,14 +69,16 @@ const catchError = (error: any | AxiosError, notificator?: Notificator) => {
 
   if (error.response.status === 404) {
     notificator?.push({
-      message: "The resource you are looking for could not be found.",
+      message: isDev()
+        ? error.message
+        : "The resource you are looking for could not be found.",
       type: "error",
     })
   }
 
   if (error.response.status === 500) {
     notificator?.push({
-      message: "An unexpected error occurred.",
+      message: isDev() ? error.message : "An unexpected error occurred.",
       type: "error",
     })
   }
@@ -89,17 +91,26 @@ export default Fetcher
 export class ValidationError extends Error {
   errors: Record<string, string> = {}
 
-  constructor(errors: Record<string, string[] | undefined>) {
+  constructor(errors: Record<string, string[] | string | undefined>) {
     super("Validation Error")
     this.formatErrors(errors)
   }
 
-  private formatErrors(errors: Record<string, string[] | undefined>) {
+  private formatErrors(errors: Record<string, string[] | string | undefined>) {
     this.errors = Object.keys(errors).reduce<Record<string, string>>(
       (acc, key) => {
-        if (errors[key]?.[0]) {
-          acc[toCamelCase(key)] = errors[key]![0]
+        if (!errors[key]) return acc
+
+        const realKey = toCamelCase(key)
+
+        if (Array.isArray(errors[key])) {
+          acc[realKey] = errors[key]![0]
         }
+
+        if (typeof errors[key] === "string") {
+          acc[realKey] = errors[key] as string
+        }
+
         return acc
       },
       {},

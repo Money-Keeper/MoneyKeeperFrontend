@@ -5,6 +5,7 @@ import Space from "@mk/ui/components/space"
 import Alert from "@mk/ui/components/alert"
 import Toast from "@mk/ui/components/toast"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
+import AuthBoundary from "features/auth/auth-boundary"
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
@@ -13,7 +14,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <title>MoneyKeeper</title>
       </Head>
 
-      <div className="bg-base-200">{children}</div>
+      <AuthBoundary>
+        <div className="bg-base-200">{children}</div>
+      </AuthBoundary>
 
       <AppMessages />
     </>

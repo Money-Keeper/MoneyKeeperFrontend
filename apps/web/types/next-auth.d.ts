@@ -8,4 +8,8 @@ declare module "next-auth" {
   interface DefaultUser {
     accessToken: string
   }
+
+  interface JWT {
+    accessToken: string
+  }
 }

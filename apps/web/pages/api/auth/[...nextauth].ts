@@ -1,6 +1,6 @@
 import NextAuth, { Session, User as AuthUser } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { InternalApiPath } from "@server/path"
+import { ApiPath } from "@server/path"
 import { JWT } from "next-auth/jwt"
 import fetcher from "@lib/fetcher"
 
@@ -9,40 +9,57 @@ export interface User {
   name: string
 }
 
+const HOST_NAME =
+  process.env.VERSEL_ENV === `production` ||
+  process.env.VERSEL_ENV === `preview`
+    ? process.env.VERCEL_URL
+    : "http://localhost:3000"
+
 export const authOptions = {
   providers: [
     CredentialsProvider({
+      type: "credentials",
       id: "money-keeper",
       name: "money-keeper",
       credentials: { accessToken: { label: "Access Token", type: "text" } },
       // @ts-ignore
-      async authorize(credentials = {}) {
-        const user = await fetcher.post<User>(InternalApiPath.currentUser, {
-          data: { token: credentials.accessToken },
+      async authorize({ accessToken } = { accessToken: "" }) {
+        if (!accessToken) {
+          return null
+        }
+
+        const user = await fetcher.get<User>(`${HOST_NAME}/${ApiPath.user}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         })
 
-        if (user.data) {
-          return {
-            ...user.data,
-            accessToken: credentials.accessToken,
-          }
-        } else {
-          return null
+        return {
+          ...user?.data,
+          accessToken,
         }
       },
     }),
   ],
   callbacks: {
     jwt: ({ token, user }: { token: JWT; user?: AuthUser }) => {
-      console.log(user)
       if (user) {
         token = { accessToken: user.accessToken }
       }
 
       return token
     },
-    session: ({ session, token }: { session: Session; token: JWT }) => {
+    session: async ({ session, token }: { session: Session; token: JWT }) => {
       session.accessToken = token.accessToken as string
+
+      if (session.accessToken) {
+        const user = await fetcher.get<User>(`${HOST_NAME}/${ApiPath.user}`, {
+          headers: {
+            Authorization: `Bearer ${session.accessToken}`,
+          },
+        })
+        session.user = user.data
+      }
 
       return session
     },

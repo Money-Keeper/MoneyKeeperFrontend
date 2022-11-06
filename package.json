@@ -15,7 +15,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "commit": "git add . && pnpm cz",
     "cz": "git-cz",
-    "clear": "npx rimraf **/node_modules",
+    "clear": "npx rimraf **/node_modules && npx rimraf **/dist && npx rimraf **/*.js",
     "prepare": "husky install"
   },
   "devDependencies": {

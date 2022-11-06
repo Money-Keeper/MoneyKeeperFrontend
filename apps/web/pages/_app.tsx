@@ -33,6 +33,7 @@ const queryClient = new QueryClient({
 
 export default function MyApp({
   Component,
+  // @ts-ignore
   pageProps: { session, ...pageProps },
 }: AppPropsWithLayout) {
   const getLayout = Component.getLayout || ((page) => page)

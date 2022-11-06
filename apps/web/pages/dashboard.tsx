@@ -5,8 +5,8 @@ import DashboardLayout from "../layouts/dashboard-layout"
 
 export default function DashboardPage() {
   return (
-    <div className="align-center mt-5 flex">
-      <h1 className="text-5xl font-bold">I am dashboard</h1>
+    <div className="align-center mt-5 flex flex-col">
+      <h1 className="text-5xl font-bold text-center">I am dashboard</h1>
       <DashboardCard />
     </div>
   )
@@ -18,7 +18,7 @@ function DashboardCard() {
   return (
     <div className="card">
       <div className="card-body">
-        <h2 className="card-title">{JSON.stringify(session)}</h2>
+        <h2 className="card-title break-all">{JSON.stringify(session)}</h2>
       </div>
     </div>
   )

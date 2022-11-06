@@ -1,26 +1,27 @@
 import { useSession } from "next-auth/react"
-import { useRouter, usePathname } from "next/navigation"
 import { PropsWithChildren, useEffect, useState } from "react"
+import { useRouter } from "next/router"
+
+const authPages = ["/login", "/signup"]
 
 function useAuth() {
   const { data: session } = useSession()
   const router = useRouter()
-  const route = usePathname()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
     if (session === null) {
-      if (route !== "/login") {
+      if (router.route !== "/login") {
         router.replace("/login")
       }
       setIsAuthenticated(false)
     } else if (session !== undefined) {
-      if (route === "/login") {
-        router.replace("/")
+      if (authPages.includes(router.route)) {
+        router.replace("/dashboard")
       }
       setIsAuthenticated(true)
     }
-  }, [session, router, route])
+  }, [session, router])
 
   return isAuthenticated
 }
