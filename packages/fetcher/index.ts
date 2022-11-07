@@ -15,17 +15,25 @@ interface FetcherOptions {
 class Fetcher {
   constructor(private readonly options: FetcherOptions = {}) {}
 
-  get = <T = unknown>(url: string, config: AxiosRequestConfig) =>
+  get = <T = unknown>(url: string, config?: AxiosRequestConfig) =>
     handle(this.options.notificator, axios.get<T>)(url, config)
 
-  delete = <T = unknown>(url: string, config: AxiosRequestConfig) =>
+  delete = <T = unknown>(url: string, config?: AxiosRequestConfig) =>
     handle(this.options.notificator, axios.delete<T>)(url, config)
 
-  post = <T = unknown, D = any>(url: string, config: AxiosRequestConfig<D>) =>
-    handle(this.options.notificator, axios.post<T>)(url, config.data, config)
+  post = <T = unknown, D = any>(url: string, config?: AxiosRequestConfig<D>) =>
+    handle(this.options.notificator, axios.post<T>)(url, config?.data, config)
 
-  put = <T = unknown, D = any>(url: string, config: AxiosRequestConfig<D>) =>
-    handle(this.options.notificator, axios.put<T>)(url, config.data, config)
+  put = <T = unknown, D = any>(url: string, config?: AxiosRequestConfig<D>) =>
+    handle(this.options.notificator, axios.put<T>)(url, config?.data, config)
+
+  setToken = (token: string) => {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`
+  }
+
+  removeToken = () => {
+    delete axios.defaults.headers.Authorization
+  }
 }
 
 type ReturnPromiseType<T extends (...args: any) => Promise<any>> = T extends (

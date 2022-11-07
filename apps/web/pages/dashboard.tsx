@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
-import { useSession } from "next-auth/react"
 import Head from "next/head"
 import DashboardLayout from "../layouts/dashboard-layout"
+import { useSession } from "../features/auth/auth-context"
 
 export default function DashboardPage() {
   return (
@@ -13,12 +13,12 @@ export default function DashboardPage() {
 }
 
 function DashboardCard() {
-  const session = useSession()
+  const { user } = useSession()
 
   return (
     <div className="card">
       <div className="card-body">
-        <h2 className="card-title break-all">{JSON.stringify(session)}</h2>
+        <h2 className="card-title break-all">{JSON.stringify(user)}</h2>
       </div>
     </div>
   )

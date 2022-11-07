@@ -1,42 +1,19 @@
-import { useSession } from "next-auth/react"
-import { PropsWithChildren, useEffect, useState } from "react"
+import { PropsWithChildren } from "react"
+import { useSession } from "./auth-context"
 import { useRouter } from "next/router"
 
 const authPages = ["/login", "/signup"]
 
-function useAuth() {
-  const { data: session } = useSession()
-  const router = useRouter()
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-  useEffect(() => {
-    if (session === null) {
-      if (router.route !== "/login") {
-        router.replace("/login")
-      }
-      setIsAuthenticated(false)
-    } else if (session !== undefined) {
-      if (authPages.includes(router.route)) {
-        router.replace("/dashboard")
-      }
-      setIsAuthenticated(true)
-    }
-  }, [session, router])
-
-  return isAuthenticated
-}
-
 export default function AuthBoundary({ children }: PropsWithChildren) {
-  const isAuthenticated = useAuth()
-  const router = useRouter()
+  const { status } = useSession()
+  const { route } = useRouter()
 
-  if (isAuthenticated && !authPages.includes(router.route)) {
-    return <>{children}</>
+  if (
+    status === "loading" ||
+    (status === "unauthenticated" && !authPages.includes(route))
+  ) {
+    return <div></div>
   }
 
-  if (!isAuthenticated && authPages.includes(router.route)) {
-    return <>{children}</>
-  }
-
-  return null
+  return <>{children}</>
 }

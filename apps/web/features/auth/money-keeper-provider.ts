@@ -1,27 +1,32 @@
+import { AuthSessionProvider, useAuth, User } from "./auth-context"
+import fetcher from "@lib/fetcher"
+import { ApiPath } from "@server/path"
 import { useToast } from "@lib/toast"
 import { useMutation } from "@tanstack/react-query"
-import { signIn } from "next-auth/react"
 import { ValidationError } from "@mk/fetcher"
 
-const HOST_NAME =
-  typeof process.env.VERCEL_URL !== "undefined"
-    ? process.env.VERCEL_URL
-    : "http://localhost:3000"
+const MoneyKeeperProvider: AuthSessionProvider = {
+  id: "money-keeper",
+  getUser: async () => {
+    const { data } = await fetcher.get<User>(ApiPath.user)
+    return data
+  },
+}
 
 function useMoneyKeeperSignIn<T = unknown>(
   fetchToken: (data: T) => Promise<{ data: { token: string } }>,
 ) {
+  const { signIn } = useAuth()
   const pushToast = useToast((s) => s.push)
 
   const { mutate, isLoading, error } = useMutation({
     mutationFn: fetchToken,
     onSuccess: async ({ data }) => {
-      alert(HOST_NAME)
       await signIn(
         "money-keeper",
-        { accessToken: data.token },
-        { callbackUrl: `${window.location.origin}/dashboard` },
-      ).catch((e) => console.log(e))
+        { token: data.token },
+        { callbackUrl: `/dashboard` },
+      )
       pushToast({ message: "Welcome onboard!", type: "success" })
     },
   })
@@ -33,4 +38,4 @@ function useMoneyKeeperSignIn<T = unknown>(
   }
 }
 
-export { useMoneyKeeperSignIn }
+export { MoneyKeeperProvider, useMoneyKeeperSignIn }

@@ -2,9 +2,13 @@ import "../styles/globals.css"
 import { AppProps } from "next/app"
 import { ReactElement, ReactNode } from "react"
 import { NextPage } from "next"
-import { SessionProvider } from "next-auth/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import Router from "next/router"
+import {
+  AuthSessionProvider,
+  SessionProvider,
+} from "features/auth/auth-context"
+import { MoneyKeeperProvider } from "../features/auth/money-keeper-provider"
 
 type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -31,18 +35,16 @@ const queryClient = new QueryClient({
   },
 })
 
-export default function MyApp({
-  Component,
-  // @ts-ignore
-  pageProps: { session, ...pageProps },
-}: AppPropsWithLayout) {
+export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout || ((page) => page)
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SessionProvider session={session}>
+      <SessionProvider providers={authProviders}>
         {getLayout(<Component {...pageProps} />)}
       </SessionProvider>
     </QueryClientProvider>
   )
 }
+
+const authProviders: AuthSessionProvider[] = [MoneyKeeperProvider]

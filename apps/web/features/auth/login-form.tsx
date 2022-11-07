@@ -2,16 +2,14 @@ import { Form, FormField, useForm } from "@mk/ui/components/form"
 import Input from "@mk/ui/components/input"
 import Button from "@mk/ui/components/button"
 import { LoginRequest, loginSchema } from "./auth-schema"
-import { useMoneyKeeperSignIn } from "./provider-hooks"
+import { useMoneyKeeperSignIn } from "./money-keeper-provider"
 import fetcher from "@lib/fetcher"
 import { ApiPath } from "@server/path"
 
 const loginUser = async (data: LoginRequest) => {
-  const res = await fetcher.post<{ token: string }>(ApiPath.login, {
+  return await fetcher.post<{ token: string }>(ApiPath.login, {
     data,
   })
-  alert(JSON.stringify(res))
-  return res
 }
 
 function LoginForm() {

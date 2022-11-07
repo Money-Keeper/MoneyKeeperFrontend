@@ -16,8 +16,8 @@ const spaceVariants = cva("flex", {
       start: "justify-start",
       center: "justify-center",
       end: "justify-end",
-      spaceBetween: "justify-between",
-      spaceAround: "justify-around",
+      "space-between": "justify-between",
+      "space-around": "justify-around",
     },
     gap: {
       xxSmall: "gap-1",
@@ -30,6 +30,9 @@ const spaceVariants = cva("flex", {
     },
     wrap: {
       true: "flex-wrap",
+    },
+    fullWidth: {
+      true: "w-full",
     },
   },
   defaultVariants: {
