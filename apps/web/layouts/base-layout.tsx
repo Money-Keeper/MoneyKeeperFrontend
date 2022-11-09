@@ -5,7 +5,7 @@ import Space from "@mk/ui/components/space"
 import Alert from "@mk/ui/components/alert"
 import Toast from "@mk/ui/components/toast"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
-import AuthBoundary from "features/auth/auth-boundary"
+import { AuthBoundary } from "features/auth"
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (

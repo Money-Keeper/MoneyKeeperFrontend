@@ -1,23 +1,27 @@
 import { Form, FormField, useForm } from "@mk/ui/components/form"
 import Input from "@mk/ui/components/input"
 import Button from "@mk/ui/components/button"
-import { LoginRequest, loginSchema } from "./auth-schema"
-import { useMoneyKeeperSignIn } from "./money-keeper-provider"
+import { SignupRequest, signupSchema } from "./auth-schema"
+import { useMoneyKeeperSignIn } from "../money-keeper-provider"
 import fetcher from "@lib/fetcher"
 import { ApiPath } from "@server/path"
 
-const loginUser = async (data: LoginRequest) => {
-  return await fetcher.post<{ token: string }>(ApiPath.login, {
+const signupUser = async (data: SignupRequest) => {
+  return await fetcher.post<{ token: string }>(ApiPath.register, {
     data,
   })
 }
 
-function LoginForm() {
-  const { mutate: login, loading, errors } = useMoneyKeeperSignIn(loginUser)
-  const form = useForm({ schema: loginSchema, reValidateMode: "onChange" })
+function SignupForm() {
+  const { mutate: signup, loading, errors } = useMoneyKeeperSignIn(signupUser)
+  const form = useForm({ schema: signupSchema, reValidateMode: "onChange" })
 
   return (
-    <Form form={form} serverErrors={errors} onSubmit={login}>
+    <Form form={form} serverErrors={errors} onSubmit={signup}>
+      <FormField label="Name">
+        <Input type="text" placeholder="Name" {...form.register("name")} />
+      </FormField>
+
       <FormField label="Email">
         <Input
           type="text"
@@ -35,10 +39,10 @@ function LoginForm() {
       </FormField>
 
       <Button className="mt-5" type="submit" intend="primary" loading={loading}>
-        Login
+        Sign Up
       </Button>
     </Form>
   )
 }
 
-export default LoginForm
+export default SignupForm

@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 import Head from "next/head"
-import DashboardLayout from "../layouts/dashboard-layout"
-import { useSession } from "../features/auth/auth-context"
+import DashboardLayout from "@layouts/dashboard-layout"
+import { useSession } from "features/auth"
 
 export default function DashboardPage() {
   return (

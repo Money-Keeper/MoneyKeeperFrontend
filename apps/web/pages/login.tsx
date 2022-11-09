@@ -1,10 +1,10 @@
 import Link from "next/link"
 import { ReactNode } from "react"
-import AuthLayout from "../layouts/auth-layout"
+import AuthLayout from "@layouts/auth-layout"
 import Head from "next/head"
 import Button from "@mk/ui/components/button"
 import Divider from "@mk/ui/components/divider"
-import LoginForm from "features/auth/login-form"
+import { LoginForm } from "features/auth/components"
 
 export default function LoginPage() {
   return (

@@ -4,11 +4,12 @@ import { ReactElement, ReactNode } from "react"
 import { NextPage } from "next"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import Router from "next/router"
+
 import {
+  MoneyKeeperProvider,
   AuthSessionProvider,
   SessionProvider,
-} from "features/auth/auth-context"
-import { MoneyKeeperProvider } from "../features/auth/money-keeper-provider"
+} from "features/auth"
 
 type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode

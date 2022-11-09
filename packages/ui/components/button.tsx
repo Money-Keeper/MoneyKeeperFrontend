@@ -1,7 +1,7 @@
 import cva, { VariantProps } from "../cva"
-import { ButtonHTMLAttributes, ElementType } from "react"
+import { ButtonHTMLAttributes, ElementType, forwardRef } from "react"
 
-const buttonVariants = cva("btn", {
+const buttonVariants = cva("btn gap-2 items-center", {
   variants: {
     intend: {
       primary: "btn-primary",
@@ -26,6 +26,9 @@ const buttonVariants = cva("btn", {
     outline: {
       true: "btn-outline",
     },
+    active: {
+      true: "btn-active",
+    },
     shape: {
       circle: "btn-circle",
       square: "btn-square",
@@ -45,17 +48,21 @@ interface ButtonProps
   as?: ElementType
 }
 
-export default function Button({
-  intend,
-  size,
-  fullWidth,
-  className,
-  shape,
-  outline,
-  loading,
-  as,
-  ...restProps
-}: ButtonProps) {
+export default forwardRef(function Button(
+  {
+    intend,
+    size,
+    fullWidth,
+    className,
+    shape,
+    outline,
+    loading,
+    active,
+    as,
+    ...restProps
+  }: ButtonProps,
+  ref,
+) {
   const Component = as ?? "button"
 
   return (
@@ -67,11 +74,13 @@ export default function Button({
         shape,
         outline,
         loading,
+        active,
         className,
       })}
+      ref={ref}
       {...restProps}
     >
       {restProps.children}
     </Component>
   )
-}
+})

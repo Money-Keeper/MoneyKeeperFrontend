@@ -9,6 +9,7 @@ import {
 } from "react"
 import Cookies from "js-cookie"
 import fetcher from "@lib/fetcher"
+import { useRouter } from "next/router"
 
 interface User {
   email: string
@@ -17,10 +18,15 @@ interface User {
 
 type AuthStatus = "loading" | "authenticated" | "unauthenticated"
 
-const [SessionContextProvider, useSession] = createContext<{
+interface SessionContext {
   status: AuthStatus
   user: User | null
-}>("SessionContext")
+  isAuthenticated: boolean
+  isLoading: boolean
+}
+
+const [SessionContextProvider, useSession] =
+  createContext<SessionContext>("SessionContext")
 
 const SessionProvider: FC<
   PropsWithChildren<{ providers: AuthSessionProvider[] }>
@@ -59,7 +65,12 @@ const SessionProvider: FC<
   }, [providers])
 
   return (
-    <SessionContextProvider status={status} user={user}>
+    <SessionContextProvider
+      status={status}
+      user={user}
+      isAuthenticated={status === "authenticated"}
+      isLoading={status === "loading"}
+    >
       <AuthSessionProviderList providers={providers}>
         <AuthProvider setStatus={setStatus} setUser={setUser}>
           {children}
@@ -91,6 +102,7 @@ const AuthProvider: FC<
   }>
 > = ({ setUser, setStatus, children }) => {
   const { providers } = useAuthProviders()
+  const router = useRouter()
 
   const signIn = useCallback(
     async (
@@ -118,13 +130,14 @@ const AuthProvider: FC<
             setStatus("authenticated")
           })
         }
-        window.location.pathname = options.callbackUrl || "/"
+
+        await router.push(options.callbackUrl || "/")
       } catch (error) {
         setStatus("unauthenticated")
         throw error
       }
     },
-    [setUser, setStatus, providers],
+    [setUser, setStatus, providers, router],
   )
 
   const logout = useCallback(

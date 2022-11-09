@@ -1,10 +1,10 @@
 import Link from "next/link"
 import { ReactNode } from "react"
-import AuthLayout from "../layouts/auth-layout"
+import AuthLayout from "@layouts/auth-layout"
 import Head from "next/head"
 import Button from "@mk/ui/components/button"
 import Divider from "@mk/ui/components/divider"
-import SignupForm from "features/auth/signup-form"
+import { SignupForm } from "features/auth/components"
 
 export default function SignUpPage() {
   return (

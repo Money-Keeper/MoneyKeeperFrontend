@@ -1,9 +1,9 @@
 import cva, { VariantProps } from "../cva"
 import { FC, PropsWithChildren, ReactNode } from "react"
-import CheckCircle from "../icons/check-circle"
-import CrossCircle from "../icons/cross-circle"
-import ExclamationTriangle from "../icons/exclamation-triangle"
-import InfoCircle from "../icons/info-circle"
+import CheckCircle from "../icons/check-circle-icon"
+import CrossCircle from "../icons/cross-circle-icon"
+import ExclamationTriangle from "../icons/exclamation-triangle-icon"
+import InfoCircle from "../icons/info-circle-icon"
 
 const alertVariants = cva("alert flex items-center", {
   variants: {
