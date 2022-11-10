@@ -4,12 +4,14 @@ import { ReactElement, ReactNode } from "react"
 import { NextPage } from "next"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import Router from "next/router"
-
+import { Inter } from "@next/font/google"
 import {
   MoneyKeeperProvider,
   AuthSessionProvider,
   SessionProvider,
-} from "features/auth"
+} from "@features/auth"
+
+const inter = Inter()
 
 type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -40,11 +42,19 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout || ((page) => page)
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <SessionProvider providers={authProviders}>
-        {getLayout(<Component {...pageProps} />)}
-      </SessionProvider>
-    </QueryClientProvider>
+    <>
+      <style jsx global>{`
+        html {
+          font-family: ${inter.style.fontFamily};
+        }
+      `}</style>
+
+      <QueryClientProvider client={queryClient}>
+        <SessionProvider providers={authProviders}>
+          {getLayout(<Component {...pageProps} />)}
+        </SessionProvider>
+      </QueryClientProvider>
+    </>
   )
 }
 

@@ -3,7 +3,7 @@ module.exports = {
   content: [
     "./pages/**/*.{js,jsx,ts,tsx}",
     "./layouts/**/*.{js,jsx,ts,tsx}",
-    "./components/**/*.{js,jsx,ts,tsx}",
+    "./features/**/*.{js,jsx,ts,tsx}",
     "../../packages/ui/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -13,5 +13,7 @@ module.exports = {
     require("@tailwindcss/forms"),
     require("daisyui"),
     require("prettier-plugin-tailwindcss"),
+    require("@headlessui/tailwindcss"),
+    require("@headlessui/tailwindcss")({ prefix: "ui" }),
   ],
 }

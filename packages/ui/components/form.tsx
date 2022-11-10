@@ -1,6 +1,5 @@
 import z, { ZodObject } from "zod"
-import React, { PropsWithChildren, ReactElement } from "react"
-import clsx from "clsx"
+import React, { PropsWithChildren, ReactElement, useMemo } from "react"
 import {
   useForm as useReactForm,
   FormProvider,
@@ -11,6 +10,7 @@ import type { UseFormProps, UseFormReturn } from "react-hook-form/dist/types"
 import createContext from "../context"
 import Space from "./space"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
+import cva, { VariantProps } from "../cva"
 
 type FormValues = Record<string, any>
 
@@ -56,13 +56,24 @@ const Form = <TSchema extends FormValues>({
   )
 }
 
+const formFieldVariants = cva("", {})
+
 interface FormFieldProps {
-  label?: string
-  children: ReactElement<{ name?: string; hasError?: boolean }>
+  className?: string
+  children:
+    | ReactElement<{ hasError?: boolean; name?: string }>[]
+    | ReactElement<{ hasError?: boolean; name?: string }>
 }
 
-const FormField = ({ label, children }: PropsWithChildren<FormFieldProps>) => {
-  const name = children.props.name
+const FormField = ({ className, children }: FormFieldProps) => {
+  const name = useMemo(() => {
+    const element = React.Children.toArray(children)
+      .filter(React.isValidElement)
+      .find((el) => React.isValidElement(el) && (el.props as any).name)
+
+    return ((element?.props as any)?.name as string) || ""
+  }, [children])
+
   const { errors } = useFormState({ name })
   const { serverErrors } = useInternalForm()
 
@@ -71,16 +82,13 @@ const FormField = ({ label, children }: PropsWithChildren<FormFieldProps>) => {
   const error = errors[name] || serverErrors[name]
 
   return (
-    <div ref={containerRef} className="form-control">
-      {label && (
-        <label className="label" htmlFor={name}>
-          <span className={clsx("label-text", error && "text-error")}>
-            {label}
-          </span>
-        </label>
-      )}
-
-      {React.cloneElement(children, { hasError: !!error })}
+    <div ref={containerRef} className={formFieldVariants({ className })}>
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, { hasError: !!error, name })
+        }
+        return child
+      })}
 
       {error && (
         <div className="text-error text-xs mt-1">
@@ -94,5 +102,37 @@ const FormField = ({ label, children }: PropsWithChildren<FormFieldProps>) => {
     </div>
   )
 }
+
+const formFieldLabelVariants = cva("label", {
+  variants: {
+    hasError: {
+      true: "text-error",
+    },
+  },
+})
+
+interface FormFieldLabelProps
+  extends VariantProps<typeof formFieldLabelVariants> {
+  name?: string
+  className?: string
+}
+
+function FormFieldLabel({
+  name,
+  hasError,
+  className,
+  children,
+}: PropsWithChildren<FormFieldLabelProps>) {
+  return (
+    <label
+      className={formFieldLabelVariants({ hasError, className })}
+      htmlFor={name}
+    >
+      {children}
+    </label>
+  )
+}
+
+FormField.Label = FormFieldLabel
 
 export { useForm, Form, FormField }

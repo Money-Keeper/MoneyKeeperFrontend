@@ -7,5 +7,7 @@ module.exports = {
     require("@tailwindcss/forms"),
     require("daisyui"),
     require("prettier-plugin-tailwindcss"),
+    require("@headlessui/tailwindcss"),
+    require("@headlessui/tailwindcss")({ prefix: "ui" }),
   ],
 }

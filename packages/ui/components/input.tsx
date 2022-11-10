@@ -1,7 +1,7 @@
 import { forwardRef, InputHTMLAttributes } from "react"
 import cva, { VariantProps } from "../cva"
 
-const inputVariants = cva("input input-bordered w-full max-w-xs", {
+const inputVariants = cva("input input-bordered w-full", {
   variants: {
     size: {
       small: "input-sm",

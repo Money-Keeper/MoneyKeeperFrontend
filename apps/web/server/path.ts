@@ -5,6 +5,7 @@ const ApiPath = {
   currency: `${baseApiPath}/currencies`,
   category: `${baseApiPath}/categories`,
   user: `${baseApiPath}/users`,
+  wallets: `${baseApiPath}/wallets`,
 
   login: `${baseApiPath}/auth`,
   register: `${baseApiPath}/register`,

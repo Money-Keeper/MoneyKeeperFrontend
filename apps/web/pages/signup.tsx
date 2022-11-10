@@ -1,10 +1,10 @@
 import Link from "next/link"
 import { ReactNode } from "react"
-import AuthLayout from "@layouts/auth-layout"
+import UnauthLayout from "@layouts/unauth-layout"
 import Head from "next/head"
 import Button from "@mk/ui/components/button"
 import Divider from "@mk/ui/components/divider"
-import { SignupForm } from "features/auth/components"
+import { SignupForm } from "@features/auth/components"
 
 export default function SignUpPage() {
   return (
@@ -24,11 +24,11 @@ export default function SignUpPage() {
 
 SignUpPage.getLayout = function getLayout(page: ReactNode) {
   return (
-    <AuthLayout>
+    <UnauthLayout>
       <Head>
         <title>Sign Up | MoneyKeeper</title>
       </Head>
       {page}
-    </AuthLayout>
+    </UnauthLayout>
   )
 }

@@ -1,15 +1,11 @@
 import { PropsWithChildren } from "react"
-import BaseLayout from "./base-layout"
-import NavigationBar from "./navigation-bar"
+import AuthLayout from "@layouts/auth-layout"
+import { WalletsGuard } from "@features/wallets/wallets-store"
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
-    <BaseLayout>
-      <div className="min-h-screen">
-        <NavigationBar />
-
-        <div className="container mx-auto">{children}</div>
-      </div>
-    </BaseLayout>
+    <AuthLayout>
+      <WalletsGuard>{children}</WalletsGuard>
+    </AuthLayout>
   )
 }

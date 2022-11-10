@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 
 const authPages = ["/login", "/signup"]
 
-export default function AuthBoundary({ children }: PropsWithChildren) {
+export default function AuthGuard({ children }: PropsWithChildren) {
   const { status } = useSession()
   const { route } = useRouter()
 

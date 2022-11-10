@@ -5,7 +5,8 @@
     "paths": {
       "@layouts/*": ["layouts/*"],
       "@lib/*": ["lib/*"],
-      "@server/*": ["server/*"]
+      "@server/*": ["server/*"],
+      "@features/*": ["features/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

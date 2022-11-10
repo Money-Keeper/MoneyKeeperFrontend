@@ -44,13 +44,13 @@ const useToastMessages = () => {
     toast.subscribe((state, prevState) => {
       if (state.list.every((x, idx) => prevState.list[idx] === x)) return
 
-      clearTimeout(timeout.current)
-      timeout.current = window.setTimeout(() => {
-        state.remove(state.list[0].id)
-      }, 7000)
+      // clearTimeout(timeout.current)
+      // timeout.current = window.setTimeout(() => {
+      //   state.remove(state.list[0].id)
+      // }, 7000)
     })
 
-    return () => clearTimeout(timeout.current)
+    // return () => clearTimeout(timeout.current)
   }, [])
 
   return list

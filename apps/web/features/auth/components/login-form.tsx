@@ -18,7 +18,8 @@ function LoginForm() {
 
   return (
     <Form form={form} serverErrors={errors} onSubmit={login}>
-      <FormField label="Email">
+      <FormField>
+        <FormField.Label>Email</FormField.Label>
         <Input
           type="text"
           placeholder="Input email"
@@ -26,7 +27,8 @@ function LoginForm() {
         />
       </FormField>
 
-      <FormField label="Password">
+      <FormField>
+        <FormField.Label>Password</FormField.Label>
         <Input
           type="password"
           placeholder="Password"

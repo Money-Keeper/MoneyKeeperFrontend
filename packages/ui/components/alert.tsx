@@ -38,13 +38,13 @@ export default function Alert({
 function getIcon(type: AlertProps["type"]): ReactNode {
   switch (type) {
     case "success":
-      return <CheckCircle size="1.2em" />
+      return <CheckCircle />
     case "error":
-      return <CrossCircle size="1.2em" />
+      return <CrossCircle />
     case "warning":
-      return <ExclamationTriangle size="1.2em" />
+      return <ExclamationTriangle />
     case "info":
-      return <InfoCircle size="1.2em" />
+      return <InfoCircle />
     default:
       return null
   }

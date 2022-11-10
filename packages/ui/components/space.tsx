@@ -54,6 +54,7 @@ export default forwardRef<HTMLDivElement, SpaceProps>(function Space(
     gap,
     wrap,
     className,
+    fullWidth,
     as,
     ...restProps
   }: SpaceProps,
@@ -69,6 +70,7 @@ export default forwardRef<HTMLDivElement, SpaceProps>(function Space(
         justify,
         gap,
         wrap,
+        fullWidth,
         className,
       })}
       ref={ref}

@@ -18,11 +18,13 @@ function SignupForm() {
 
   return (
     <Form form={form} serverErrors={errors} onSubmit={signup}>
-      <FormField label="Name">
+      <FormField>
+        <FormField.Label>Name</FormField.Label>
         <Input type="text" placeholder="Name" {...form.register("name")} />
       </FormField>
 
-      <FormField label="Email">
+      <FormField>
+        <FormField.Label>Email</FormField.Label>
         <Input
           type="text"
           placeholder="Input email"
@@ -30,7 +32,8 @@ function SignupForm() {
         />
       </FormField>
 
-      <FormField label="Password">
+      <FormField>
+        <FormField.Label>Password</FormField.Label>
         <Input
           type="password"
           placeholder="Password"

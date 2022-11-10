@@ -3,14 +3,24 @@ import Dropdown from "@mk/ui/components/dropdown"
 import Menu from "@mk/ui/components/menu"
 import UserIcon from "@mk/ui/icons/user-icon"
 import LogoutIcon from "@mk/ui/icons/logout-icon"
-import { useAuth, useSession } from "features/auth"
+import { useAuth, useSession } from "@features/auth"
+import Link from "next/link"
+import Space from "@mk/ui/components/space"
 
 export default function NavigationBar() {
   return (
     <div className="navbar bg-base-100 px-5 justify-between shadow-md">
-      <Button intend="ghost">Money Keeper</Button>
+      <Button as={Link} intend="ghost" href="/dashboard">
+        Money Keeper
+      </Button>
 
-      <UserDropdown />
+      <Space direction="row" gap="small">
+        <Button intend="accent" as={Link} href="/new-wallet">
+          Create new wallet
+        </Button>
+
+        <UserDropdown />
+      </Space>
     </div>
   )
 }
